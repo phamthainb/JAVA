@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package bai7;
 
 import bai7.sort.SortByCredits;
@@ -16,7 +21,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class MainFrame extends JFrame {
+public class Bai7 extends JFrame {
 
     private JLabel creditLabel, nameLabel, typeLabel, comboBoxLabel;
     private JButton saveButton, showButton;
@@ -26,7 +31,7 @@ public class MainFrame extends JFrame {
     private JComboBox comboBox;
     private DefaultTableModel model;
 
-    public MainFrame() throws FileNotFoundException {
+    public Bai7() throws FileNotFoundException {
         Vector<String> cols = new Vector<>();
         cols.add("ID");
         cols.add("Ten MH");
@@ -37,7 +42,7 @@ public class MainFrame extends JFrame {
         createInputFrame();
         createControlFrame();
         createOutputTable(getSubjects("src/bai7/file/MH.INP.txt"));
-        
+
         System.out.println(getSubjects("src/bai7/file/MH.INP.txt"));
 
         setSize(800, 500);
@@ -47,31 +52,35 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    private void createInputFrame(){
-
+    private void createInputFrame() {
         // init JFrame
         inputPanel = new JPanel();
         inputPanel.setSize(400, 300);
         inputPanel.setLayout(new GridLayout(4, 2));
+       
         nameLabel = new JLabel("Ten mon hoc : ");
         nameTxt = new JTextArea(1, 20);
+       
         typeLabel = new JLabel("Chuyen nganh : ");
         typeTxt = new JTextArea(1, 20);
+        
         creditLabel = new JLabel("So tin chi : ");
         creditTxt = new JTextArea(1, 20);
-        saveButton = new JButton("Save");
-
+        
         // add action
+        saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // get value of list input
                 String name = nameTxt.getText();
                 String type = typeTxt.getText();
                 String credits = creditTxt.getText();
+                
                 try {
-                    ArrayList <Subject> subjects = getSubjects("src/bai7/file/MH.INP.txt");
-                    if(!name.equals("") && !type.equals("") && !credits.equals("")){
-                        subjects.add(new Subject(subjects.size()+1000, name, type, Integer.parseInt(credits)));
+                    ArrayList<Subject> subjects = getSubjects("src/bai7/file/MH.INP.txt");
+                    if (!name.equals("") && !type.equals("") && !credits.equals("")) {
+                        subjects.add(new Subject(subjects.size() + 1000, name, type, Integer.parseInt(credits)));
                         nameTxt.setText("");
                         typeTxt.setText("");
                         creditTxt.setText("");
@@ -88,17 +97,22 @@ public class MainFrame extends JFrame {
 
         inputPanel.add(nameLabel);
         inputPanel.add(nameTxt);
+        
         inputPanel.add(typeLabel);
         inputPanel.add(typeTxt);
+        
         inputPanel.add(creditLabel);
         inputPanel.add(creditTxt);
+        //save btn
         inputPanel.add(saveButton);
+        // display
         inputPanel.setVisible(true);
+        //add to Frame
         add(inputPanel);
 
     }
 
-    private void createControlFrame(){
+    private void createControlFrame() {
         controlPanel = new JPanel();
         controlPanel.setSize(500, 400);
 
@@ -109,28 +123,24 @@ public class MainFrame extends JFrame {
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList <Subject> subjects = null, tempSubjects = null;
+                ArrayList<Subject> subjects = null, tempSubjects = null;
                 String val = String.valueOf(comboBox.getSelectedItem());
                 try {
                     subjects = getSubjects("src/bai7/file/MH.INP.txt");
                     tempSubjects = subjects;
-                    if(val.equals("Khong")){
+                    if (val.equals("Khong")) {
                         tempSubjects = subjects;
-                    }
-                    else if(val.equals("ID")){
+                    } else if (val.equals("ID")) {
                         Collections.sort(tempSubjects, new SortById());
-                    }
-                    else if(val.equals("Ten")){
+                    } else if (val.equals("Ten")) {
                         Collections.sort(tempSubjects, new SortByName());
-                    }
-                    else if(val.equals("Chuyen nganh")){
+                    } else if (val.equals("Chuyen nganh")) {
                         Collections.sort(tempSubjects, new SortByType());
-                    }
-                    else {
+                    } else {
                         Collections.sort(tempSubjects, new SortByCredits());
                     }
                     model.setRowCount(0);
-                    for(Subject subject : tempSubjects){
+                    for (Subject subject : tempSubjects) {
                         model.addRow(subject.toVector(subject));
                     }
                 } catch (FileNotFoundException fileNotFoundException) {
@@ -146,9 +156,9 @@ public class MainFrame extends JFrame {
         add(controlPanel);
     }
 
-    private void createOutputTable(ArrayList<Subject> subjects){
+    private void createOutputTable(ArrayList<Subject> subjects) {
 
-        for(Subject subject : subjects){
+        for (Subject subject : subjects) {
             model.addRow(subject.toVector(subject));
         }
 
@@ -158,35 +168,15 @@ public class MainFrame extends JFrame {
         controlPanel.setVisible(true);
     }
 
-    private ArrayList<Subject> getSubjects (String path) throws FileNotFoundException {
-        ArrayList<Subject> subjects = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(path), "utf-8");
-        while(scanner.hasNextLine()) {
-            int id = Integer.parseInt(scanner.nextLine());
-            String name = scanner.nextLine();
-            String type = scanner.nextLine();
-            int credits = Integer.parseInt(scanner.nextLine());
-            if(id >= 1000 && id <= 9999){
-                if(!name.equals("")){
-                    if(!type.equals("")){
-                        if(credits > 0 && credits < 7){
-                            subjects.add(new Subject(id, name, type, credits));
-                        }
-                    }
-                }
-            }
-        }
-        return subjects;
-    }
-
     public static void main(String[] args) throws FileNotFoundException {
-        new MainFrame();
+        new Bai7();
     }
 
+    // utils
     private void writeToFile(ArrayList<Subject> subjects, String path) throws IOException {
         FileOutputStream fos = new FileOutputStream(new File(path));
         PrintWriter printWriter = new PrintWriter(fos);
-        for(Subject subject : subjects){
+        for (Subject subject : subjects) {
             printWriter.println(subject.getId());
             printWriter.println(subject.getName());
             printWriter.println(subject.getType());
@@ -194,6 +184,30 @@ public class MainFrame extends JFrame {
         }
         printWriter.close();
         fos.close();
+    }
+
+    private ArrayList<Subject> getSubjects(String path) throws FileNotFoundException {
+        //result
+        ArrayList<Subject> subjects = new ArrayList<>();
+       
+        Scanner scanner = new Scanner(new File(path), "utf-8");
+        
+        while (scanner.hasNextLine()) {
+            int id = Integer.parseInt(scanner.nextLine());
+            String name = scanner.nextLine();
+            String type = scanner.nextLine();
+            int credits = Integer.parseInt(scanner.nextLine());
+            if (id >= 1000 && id <= 9999) {
+                if (!name.equals("")) {
+                    if (!type.equals("")) {
+                        if (credits > 0 && credits < 7) {
+                            subjects.add(new Subject(id, name, type, credits));
+                        }
+                    }
+                }
+            }
+        }
+        return subjects;
     }
 
 }
