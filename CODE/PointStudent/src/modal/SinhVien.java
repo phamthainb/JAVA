@@ -16,7 +16,7 @@ public class SinhVien implements Serializable {
 
     private int ma;
     private String hoTen, diaChi, ngaySinh, lop;
-    private static int id = 10000;
+    public static int id = 10000;
 
     // validate
     public static String check(String hoTen, String diaChi, String ngaySinh, String lop) {
@@ -25,7 +25,7 @@ public class SinhVien implements Serializable {
         if (hoTen.isEmpty()) {
             mess += "Họ tên " + Text.REQUIRER;
         } else {
-            if (!hoTen.matches("^[a-zA-Z]*$")) {
+            if (!hoTen.matches("^[a-zA-Z\\s]+$")) {
                 mess += "Họ tên" + Text.VALIDR;
             }
         }

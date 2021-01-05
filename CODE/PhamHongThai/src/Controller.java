@@ -5,14 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modal.BangDiem;
-import modal.SinhVien;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,31 +23,38 @@ import modal.SinhVien;
 public class Controller {
 
     public <T> List<T> read(String path) {
+        FileInputStream fis = null;
         List<T> list = new ArrayList<>();
-        File file = new File(path);
-        if (file.length() > 0) {
+
+        try {
+            File file = new File(path);
+            fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            list = (List<T>) ois.readObject();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             try {
-                FileInputStream fis = new FileInputStream(file);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                list = (List<T>) ois.readObject();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                fis.close();
             } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return list;
     }
 
-    public <T> void write(String path, List<T> data) {
+    public <T> void write(List<T> data, String path) {
         FileOutputStream fos = null;
         try {
             File file = new File(path);
             fos = new FileOutputStream(file);
-            ObjectOutputStream ous = new ObjectOutputStream(fos);
-            ous.writeObject(data);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(data);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -63,15 +67,4 @@ public class Controller {
             }
         }
     }
-
-    public int mapDiem(List<BangDiem> data, int sv, int mh) {
-        for (int i = 0; i < data.size(); i++) {
-            BangDiem temp = data.get(i);
-            if (temp.getSv().getMa() == sv && temp.getMh().getMa() == mh) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
 }
