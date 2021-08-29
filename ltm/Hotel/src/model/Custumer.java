@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 public class Custumer implements Serializable {
 
@@ -23,6 +24,16 @@ public class Custumer implements Serializable {
         this.tel = tel;
         this.email = email;
         this.note = note;
+    }
+
+    public Custumer(Vector data) {
+        this.id = Integer.parseInt(data.get(0) + "");
+        this.name = data.get(1) + "";
+        this.idCard = data.get(2) + "";
+        this.address = data.get(3) + "";
+        this.tel = data.get(4) + "";
+        this.email = data.get(5) + "";
+        this.note = data.get(6) + "";
     }
 
     public int getId() {
@@ -79,6 +90,11 @@ public class Custumer implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + email;
     }
 
 }
