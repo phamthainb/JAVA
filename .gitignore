@@ -11,23 +11,13 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+.jar
 *.war
 *.nar
 *.ear
-*.zip
+.zip
 *.tar.gz
 *.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/bt3-swing/swing/nbproject/private/
-/bt3-swing/swing/build/
-/bt3-swing/bookManager/BookManager/nbproject/private/
-/bt3-swing/bookManager/BookManager/build/
-/bt3-swing/bookManager/bai7/nbproject/private/
-/bt3-swing/bookManager/bai7/build/
-/CODE/PointStudent/nbproject/private/
-/CODE/PointStudent/build/
-/CODE/PhamHongThai/nbproject/private/
-/CODE/PhamHongThai/build/
