@@ -21,3 +21,16 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/ltw/serverlet/nbproject/private/
+/ltw/serverlet/build/
+/ltw/serverlet/dist/
+/ltw/WebApplication1/nbproject/private/
+/ltw/WebApplication1/build/
+/ltw/WebApplication1/dist/
+/ltw/WebApplication2/nbproject/private/
+/ltw/WebApplication2/build/
+/ltw/WebApplication2/dist/
+/ltw/WebApplication3/nbproject/private/
+/ltw/WebApplication3/dist/
+/ltw/WebApplication3/build/
+/ltw/test/target/
