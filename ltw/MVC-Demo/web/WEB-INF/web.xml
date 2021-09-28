@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        
+        <welcome-file>index.jsp</welcome-file>
+        
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>AddToEmailListServlet</servlet-name>
+        <servlet-class>email.AddToEmailListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayMusicChoicesServlet</servlet-name>
+        <servlet-class>servlet.DisplayMusicChoicesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToEmailListServlet</servlet-name>
+        <url-pattern>/addToEmailList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayMusicChoicesServlet</servlet-name>
+        <url-pattern>/displayMusicChoices</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
